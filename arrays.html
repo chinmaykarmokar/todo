@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Arrays</title>
+</head>
+<body>
+	<input type="text" id="test">
+	<button type="button" onclick="resp()">Check</button>
+	<div id="display"></div>
+	<div id="result"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+
+	let task = [];
+
+	function resp () {
+		
+		let x = document.getElementById('test').value;
+			task.push(`<div id = "${x}">` + x + `<button id = "${x}" onclick = "remove('${x}')">` + 'Remove' + '</button>' + '</div>');
+			localStorage.setItem("tasks_array", JSON.stringify(task));
+
+		document.getElementById('display').innerHTML = task;
+				
+		console.log(task);		
+	}
+
+	function remove (id) {
+		// We use this variable to access the items that we push into the array. This function is called above.
+		let item = `<div id = "${id}">` + id + `<button id = "${id}" onclick = "remove('${id}')">` + 'Remove' + '</button>' + '</div>';
+		console.log(item);
+
+		let index = task.indexOf(item);
+		console.log(index);
+
+		let cut = task.splice(index,1)
+		console.log(cut);
+		
+		localStorage.setItem("tasks_array", JSON.stringify(task));
+		console.log(task);
+		
+		document.getElementById(id).innerHTML = ' ';		
+	}
+
+	document.getElementById('display').innerHTML = JSON.parse(localStorage.getItem("tasks_array"));
+	console.log(JSON.parse(localStorage.getItem("tasks_array")));
+	task = task.concat(JSON.parse(localStorage.getItem("tasks_array")));
+	console.log(task);
+
+</script>
